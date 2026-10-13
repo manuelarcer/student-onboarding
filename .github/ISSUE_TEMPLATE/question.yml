@@ -1,6 +1,6 @@
 name: Question about a module
 description: Ask about a step, a cell or a result you do not understand.
-title: "[question] module NN: "
+title: "module NN: "
 labels: ["question"]
 body:
   - type: markdown

@@ -1,6 +1,6 @@
 name: Something does not work
 description: A command fails, a cell raises an error, or the output is not what the module says.
-title: "[problem] module NN: "
+title: "module NN: "
 labels: ["bug"]
 body:
   - type: markdown
