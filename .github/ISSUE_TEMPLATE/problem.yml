@@ -1,0 +1,73 @@
+name: Something does not work
+description: A command fails, a cell raises an error, or the output is not what the module says.
+title: "[problem] module NN: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Stuck on an installation problem for more than one hour? Post here and also tell your supervisor directly.
+        Paste text, not a screenshot of text: text can be searched and copied.
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      options:
+        - 00 setup
+        - 01 Python for atoms
+        - 02 ASE basics
+        - 03 bulk structures and the Materials Project
+        - 04 slabs
+        - 05 adsorbates
+        - 06 single point
+        - 07 relaxation
+        - 08 frequencies
+        - 09 NEB
+        - 10 molecular dynamics
+        - 11 ASPIRE2A
+        - capstone (projects/)
+        - learning path (paths/)
+        - other
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where in the module
+      description: The step number of a README, or the notebook, section heading and cell number.
+      placeholder: "00-setup README, step 8"
+    validations:
+      required: true
+  - type: dropdown
+    id: computer
+    attributes:
+      label: Your computer
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - ASPIRE2A
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: The exact command or cell you ran
+      description: Copied from the terminal or the notebook, not retyped from memory.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: The output
+      description: The last 20 lines, including the error message.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected and what happened instead
+    validations:
+      required: true

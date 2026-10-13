@@ -1,0 +1,21 @@
+# 08. Frequencies
+
+- Goal: compute the vibrational frequencies of an adsorbate with `ase.vibrations.Vibrations`, read a zero-point energy and a vibrational entropy out of them, say which mode is which from the displacement patterns, and tell an imaginary mode from a real one and say what it does and does not prove
+- Before you start: modules 00 to 07 finished; the `mlip-mace` environment active; Jupyter Lab started from the repository root, as step 12 of module 00 says; the kernel at the top right of the notebook reads "Python 3 (ipykernel)"
+- Time to run the notebook: under 1 minute (measured 47.7 s on a `work/` folder that did not exist yet and 45.1 s and 27.4 s on re-runs over the folder the first run left (the 27.4 s is the verification run of 2026-10-12), macOS on Apple Silicon, all three with the model weights and the package caches already warm; a first run on a cold machine is slower, an effect module 06's README measures on its own notebook, 19 to 37 s on such a start against between 8 and 13 s warm, and module 07's notes without a number)
+    - Three relaxations run in it, through three `mlip optimize run` commands: one of a 28-atom cell, the Pt(1 1 1) slab with one O on it, and two of a 29-atom cell, the same slab with OH, relaxed to two different force targets
+    - Four vibrational analyses follow them, 40 force calls in total, all from Python with one model built once and reused: 36 displacements, plus one call for the geometry as it stands in each of the four
+    - One more command runs, `mlip --help`, in the section on version 0.4.0 having no CLI frequency command
+    - The MACE-MP-0 weights, about 45 MB, were downloaded by step 10 of module 00 and sit in `~/.cache/mace/`, so this notebook downloads nothing
+- Time to work through it: about 2 hours, reading every cell, changing a setting and running it again
+- After this you can:
+    - Run `Vibrations(atoms, indices=[...], name="work/<folder>")` on a relaxed structure and say what `indices`, `delta` and `nfree` decide, and what `run()` costs in force calls
+    - Say why a frequency is only meaningful at a stationary point, and read the forces of a geometry to find out whether it is one
+    - Read a frequency list that comes back as complex numbers, and count the imaginary modes by testing the imaginary part rather than looking for a minus sign
+    - Identify the modes of a two-atom adsorbate from the displacement pattern of each one, with `get_mode`: which atom moves, in which direction, and whether the two move together or against each other
+    - Take a zero-point energy with `get_zero_point_energy()` and a vibrational entropy with `ase.thermochemistry.HarmonicThermo`, and place both in `ΔG = ΔE + ΔZPE − TΔS`
+    - Say what a zero-point energy does with an imaginary mode, which is to drop it in silence, and what `HarmonicThermo` does instead, which is to refuse the list
+    - Say what one imaginary mode does and does not license: it means the geometry is not a minimum, and it does not make the geometry a transition state or give you a barrier
+    - Report a frequency result with the settings it needs: the model and the head (canon `C1`), the force target and the `converged` label of the relaxation, which atoms were vibrated, `delta`, `nfree`, and the count of imaginary modes
+- Files: `frequencies.ipynb`; the three relaxations and the four vibrational analyses each write one folder into `work/`, and `work/` is not committed
+- Needs `../../scripts/onboarding_structures.py`

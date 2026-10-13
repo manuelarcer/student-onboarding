@@ -1,0 +1,84 @@
+# PROVENANCE, added when this excerpt was copied into the onboarding repository.
+#   Source:        PRODUCTION/02_vacuum_slabs/queue_all_oc25.yaml under calculations/explicit_solvation/
+#                  (path relative to the EWaste2GreenCat project folder)
+#   Copied on:     2026-10-12
+#   File modified: 2026-06-09 17:50
+#   SHA-256 of the whole original: b7c57ce4bf030998127cb5cd2a1d43eb6d1e33fa8c13f00ad5ddc11ade965896
+# What is copied: the `defaults` block and the first two jobs of the original, line for line,
+# and then the first job of the original that carries `--uma-task oc25` (line 22234 of the
+# original). The first two jobs run chgnet, which has no task head, so neither carries it.
+# These are jobs of the earlier tasker_flip vacuum-slab production, not of the symmetric
+# slabs the project builds now. Paths such as /scratchb/juar/... are the project's own and do
+# not exist on your computer.
+defaults:
+  cwd: /scratchb/juar/EWaste2GreenCat/explicit_solvation
+  gpu_required: true
+  gpu_min_mem_mib: 12000
+  env:
+    OMP_NUM_THREADS: '4'
+jobs:
+- id: Co3O4_100_f0A_thick15A_2x2_chgnet
+  cmd:
+  - /scratchb/juar/EWaste2GreenCat/explicit_solvation/.venv/chgnet/bin/mlip
+  - optimize
+  - run
+  - --structure
+  - 02_vacuum_slabs_v2/Co3O4/100/f0A/chgnet/POSCAR
+  - --mlip
+  - chgnet
+  - --device
+  - cuda
+  - --optimizer
+  - bfgs
+  - --fmax
+  - '0.05'
+  - --max-steps
+  - '300'
+  output_dir: 02_vacuum_slabs_v2/Co3O4/100/f0A/chgnet
+  completion_check:
+    type: file_exists
+    path: opt_final.vasp
+- id: Co3O4_100_f0B_thick15A_2x2_chgnet
+  cmd:
+  - /scratchb/juar/EWaste2GreenCat/explicit_solvation/.venv/chgnet/bin/mlip
+  - optimize
+  - run
+  - --structure
+  - 02_vacuum_slabs_v2/Co3O4/100/f0B/chgnet/POSCAR
+  - --mlip
+  - chgnet
+  - --device
+  - cuda
+  - --optimizer
+  - bfgs
+  - --fmax
+  - '0.05'
+  - --max-steps
+  - '300'
+  output_dir: 02_vacuum_slabs_v2/Co3O4/100/f0B/chgnet
+  completion_check:
+    type: file_exists
+    path: opt_final.vasp
+- id: Co3O4_100_f0A_thick15A_2x2_uma-s
+  cmd:
+  - /scratchb/juar/EWaste2GreenCat/explicit_solvation/.venv/uma/bin/mlip
+  - optimize
+  - run
+  - --structure
+  - 02_vacuum_slabs_v2/Co3O4/100/f0A/uma-s/POSCAR
+  - --mlip
+  - uma-s-1p2
+  - --device
+  - cuda
+  - --optimizer
+  - bfgs
+  - --fmax
+  - '0.05'
+  - --max-steps
+  - '300'
+  - --uma-task
+  - oc25
+  output_dir: 02_vacuum_slabs_v2/Co3O4/100/f0A/uma-s
+  completion_check:
+    type: file_exists
+    path: opt_final.vasp

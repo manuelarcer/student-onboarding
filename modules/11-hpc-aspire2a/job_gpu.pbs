@@ -1,0 +1,38 @@
+#!/bin/bash
+# job_gpu.pbs: the same optimization as job_cpu.pbs, on one GPU.
+# Not executed on ASPIRE2A for your account. Confirm the values on the lines marked below on your first login.
+#
+# Lines that start with #PBS are read by the PBS scheduler when you run "qsub job_gpu.pbs".
+# They are written on their own lines because the group has not confirmed that PBS accepts a
+# comment after a value on the same line.
+
+# EDIT: a short name for the job (it appears in qstat and in the output file name)
+#PBS -N onboarding_gpu
+# One GPU, together with 16 CPU cores and 64 GB of memory.
+#PBS -l select=1:ngpus=1:ncpus=16:mem=64gb
+#PBS -l walltime=01:00:00
+#PBS -j oe
+# EDIT: the charging code shown for your free ASPIRE2A account (canon K3); confirm it with your
+# supervisor before the first job. PROJECT_CODE is a placeholder. Hours of this job are counted
+# against your free allocation. CONFIRM whether your allocation includes GPU hours.
+#PBS -P PROJECT_CODE
+# From the group's experience: the queue named normal sends a request that contains ngpus to
+# the GPU queue, so the queue line is the same as in the CPU job. CONFIRM on your first login.
+#PBS -q normal
+
+# Go to the folder where you ran qsub (it holds the POSCAR).
+cd "$PBS_O_WORKDIR"
+
+# If the job fails with a message about a missing Python library, load the same Python module
+# here that you loaded in module 11, section 6. Remove the "#" and write the module name.
+# module load <python module>
+
+export OMP_NUM_THREADS=16
+export XDG_CACHE_HOME=$HOME/scratch/.cache
+
+# EDIT if your venv lives elsewhere
+MLIP=$HOME/scratch/venv/mlip-mace/bin/mlip
+
+# --device cuda makes the model run on the GPU. The values below are teaching values; for a
+# project they come from your supervisor (module 11, section 10).
+"$MLIP" optimize run --structure POSCAR --mlip mace --fmax 0.05 --optimizer bfgs --max-steps 300 --device cuda

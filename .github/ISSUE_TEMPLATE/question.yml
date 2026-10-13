@@ -1,0 +1,54 @@
+name: Question about a module
+description: Ask about a step, a cell or a result you do not understand.
+title: "[question] module NN: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One question per issue. Before you post, search the closed issues: another student may have asked it already.
+        For a README or a `.py` file, you can point at the exact lines: open the file on GitHub, click the first line number,
+        shift-click the last one, choose "Copy permalink" from the `...` menu, and paste the link below. GitHub then shows those lines here.
+        For a notebook this does not work; give the section heading and the cell number instead.
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      options:
+        - 00 setup
+        - 01 Python for atoms
+        - 02 ASE basics
+        - 03 bulk structures and the Materials Project
+        - 04 slabs
+        - 05 adsorbates
+        - 06 single point
+        - 07 relaxation
+        - 08 frequencies
+        - 09 NEB
+        - 10 molecular dynamics
+        - 11 ASPIRE2A
+        - capstone (projects/)
+        - learning path (paths/)
+        - other
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where in the module
+      description: The file, and the section heading and cell number (the number in brackets on the left of the cell), or a permalink to the lines.
+      placeholder: "relaxation.ipynb, section 7 \"Adsorption energies from relaxed structures\", cell [14]"
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What you do not understand, and what you think the answer might be.
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you tried
+      description: For example a value you changed and what the cell printed then. Paste text, not a screenshot of text.

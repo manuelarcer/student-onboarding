@@ -1,0 +1,16 @@
+# 06. Single point
+
+- Goal: attach a machine-learning interatomic potential to a structure with `mliprun`, read one energy and one set of forces out of it, assemble an energy difference whose every term comes from the same model, and use the forces to see that a placed adsorbate is a starting guess and not a result
+- Before you start: modules 00 to 05 finished; the `mlip-mace` environment active; Jupyter Lab started from the repository root, as step 12 of module 00 says; the kernel at the top right of the notebook reads "Python 3 (ipykernel)"
+- Time to run the notebook: under 1 minute (measured 10.3 to 12.6 s over five runs, macOS on Apple Silicon, and 8.0 to 8.5 s over three runs of the same cells while the machine was quieter, and 12.1 s in the verification run of 2026-10-12, so that spread is the machine and not the notebook; the first run of a session is slower again while the model weights and the package caches are cold, measured between 19 s and 37 s on such starts)
+    - The MACE-MP-0 weights, about 45 MB, were downloaded by step 10 of module 00 and sit in `~/.cache/mace/`, so this notebook downloads nothing; on a computer where that step was never run, the first cell that builds a model downloads them and needs a network connection
+- Time to work through it: about 2 hours, reading every cell, changing a value in it and running it again
+- After this you can:
+    - Attach MACE-MP-0 to any structure with `setup_calculator(atoms, mlip="mace", device="cpu")`, and say why the model name is written out in every call instead of left to the tool (canon `C1`)
+    - Read a total energy in eV and a forces array in eV/Å off a structure, say what each one is and is not, and reduce the forces to one number with `calc_fmax`
+    - Say why the maximum over all rows of `atoms.get_forces()` is already the maximum over the free atoms, and which rows of that array stop being zero when the constraint is removed
+    - Build one calculator with `build_calculator(mlip="mace", device="cpu")` and reuse it for many structures, instead of paying the model load once per structure
+    - Assemble `E_ads = E(slab+O) − E(slab) − ½ E(O2)` with every term from that one calculator, say what breaks when two terms come from different models or heads (canon `C3`), and say why the ½ O2 reference is the weakest term of the three
+    - Read the forces of a placed adsorbate against the 0.05 eV/Å that module 07 relaxes to, and say why no energy in this module is a number to report
+- Files: `single_point.ipynb`; the notebook reads no file and writes none, every structure is built in memory
+- Needs `../../scripts/onboarding_structures.py`

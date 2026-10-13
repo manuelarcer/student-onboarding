@@ -1,0 +1,31 @@
+# Ignores for this repository: Python caches and environments, notebook checkpoints, editor files,
+# notebook outputs (work/), trajectories, model weights, NEB backups and export output.
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+.coverage.*
+.ipynb_checkpoints/
+
+# Claude Code session-local
+.claude/logs/
+.claude/env.json
+
+# OS / editor
+.DS_Store
+*.swp
+.obsidian/
+
+# Onboarding repository: notebook outputs, trajectories, model weights, NEB restart backups
+work/
+*.traj
+*.model
+bkup_*/
+
+# Output of the export route in docs/export.md, and quarto's working folders
+export/
+.quarto/

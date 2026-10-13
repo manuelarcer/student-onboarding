@@ -1,0 +1,44 @@
+# PROVENANCE, added when this excerpt was copied into the onboarding repository.
+#   Source:        PRODUCTION/03_slab_water/queue_stage1_oc25.yaml under calculations/explicit_solvation/
+#                  (path relative to the EWaste2GreenCat project folder)
+#   Copied on:     2026-10-12
+#   File modified: 2026-07-25 09:39
+#   SHA-256 of the whole original: b16448e4b8cf91f6f4c03e40419746db3707314a6968db7ed11263d5b330a8f7
+# What is copied: everything of the original up to the end of its first job, line for line.
+# This is the slab-plus-water stage (an MD run), not the vacuum-slab stage. Paths such as
+# /scratchb/juar/... are the project's own and do not exist on your computer.
+# Stage-1 oc25 slab+water production MDs (CANON C5: 350k steps = 175 ps; E-p1 vacuum-gap cells)
+defaults:
+  gpu_required: true
+
+jobs:
+  - id: uma-s_100_f3A
+    cwd: /scratchb/juar/EWaste2GreenCat/explicit_solvation/PRODUCTION/03_slab_water/Co3O4/uma-s/100_f3A
+    cmd:
+      - '/scratchb/juar/EWaste2GreenCat/explicit_solvation/.venv/uma/bin/mlip'
+      - 'md'
+      - 'run'
+      - '--structure'
+      - 'POSCAR'
+      - '--device'
+      - 'cuda'
+      - '--ensemble'
+      - 'nvt'
+      - '--thermostat'
+      - 'langevin'
+      - '--temperature'
+      - '300'
+      - '--friction'
+      - '0.01'
+      - '--timestep'
+      - '0.5'
+      - '--steps'
+      - '350000'
+      - '--mlip'
+      - 'uma-s-1p2'
+      - '--uma-task'
+      - 'oc25'
+    completion_check:
+      type: md_steps_reached
+      target_steps: 350000
+    resumable_md: true

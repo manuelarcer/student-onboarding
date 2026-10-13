@@ -1,0 +1,19 @@
+# 09. NEB
+
+- Goal: find a reaction barrier with a nudged elastic band run from the terminal with `mliprun`, read the files it writes, draw the profile with `asetools`, read the forward and the backward barrier, check that the band is not torn, restart it with a tighter force target, and say which of its settings are decisions of the project and not defaults
+- Before you start: modules 00 to 08 finished; the `mlip-mace` environment active; Jupyter Lab started from the repository root, as step 12 of module 00 says; the kernel at the top right of the notebook reads "Python 3 (ipykernel)"
+- Time to run the notebook: about 1 to 1.5 minutes, 39 to 83 s over seven runs (measured 44.7, 61.8, 41.8 and 40.4 s on a `work/` folder that did not exist yet and 40.7 s and 39.3 s on re-runs over the folder the earlier run left, the last of them in the verification run of 2026-10-12, with the model weights and the package caches already warm; and 82.7 s on 2026-10-13 on a `work/` folder that did not exist yet and with an empty Matplotlib cache, the run whose outputs the notebook now shows; all on macOS on Apple Silicon; a first run on a cold machine is slower, an effect module 06's README measures on its own notebook)
+    - Four `mlip` commands run in it: two relaxations of a 28-atom cell, the Pt(1 1 1) slab with one O on it, at 5 to 16 s each; one band of five intermediate images between them, 17 to 22 s; and one restart of that band, about 7 to 8 s
+    - The machine was shared with other sessions during these runs, with a load average of 2 to 14 over the seven runs; the two slowest runs, 82.7 s and 61.8 s, were measured at load averages of 3.8 to 6.0 and of 5 to 10; read the times as an upper range and not as what an idle laptop gives
+    - The MACE-MP-0 weights, about 45 MB, were downloaded by step 10 of module 00 and sit in `~/.cache/mace/`, so this notebook downloads nothing
+- Time to work through it: about 2 hours, reading every cell, changing a setting and running it again
+- After this you can:
+    - Relax the two endpoints of a reaction to one force target, and run `mlip neb run --initial ../IS/opt_final.vasp --final ../FS/opt_final.vasp --mlip mace --num-images 5 --k 0.1 --climb --fmax 0.05 --neb-max-steps 300 --no-optimize-endpoints --device cpu` from inside the folder the band should write into, because the command writes into the folder it is started in (canon `C1`, `C4`, `C6`)
+    - Say what `--no-optimize-endpoints` skips, and what the command does with the endpoints when it is left out
+    - Name the files a band writes, and find its `converged` label in the `status` of the last stage of `mliprun_run.json`, since the `results` of a band stage have no `converged` key
+    - Compute the forward barrier, the backward barrier and the reaction energy from `neb_data.csv`, check them against the run record, and draw the profile with `asetools.pathways.plot_nebs`
+    - Check a band for inter-image jumps, say that a jump above 1.0 Å is a warning and not a failure, and say what the other check of canon `C7`, the drift of each atom from where the starting path put it, asks for that this notebook does not compute
+    - Restart a band with `mlip neb run --restart --mlip mace --fmax 0.03`, say which settings a restart takes from `neb_parameters.txt`, which it lets you change and which it refuses, and say why tightening only the band breaks canon `C4`
+    - Say which three settings canon `C6` leaves to the project (the number of images, the spring constant and the climbing image), and that the platform defaults run silently if you leave them out
+- Files: `neb.ipynb`; the two relaxations and the band each write one folder into `work/` (`IS/`, `FS/` and `neb/`), a restart adds a `bkup_` folder inside `work/neb/`, and `work/` is not committed
+- Needs `../../scripts/onboarding_structures.py` and the `asetools` package that module 00 installs with `mliprun`
