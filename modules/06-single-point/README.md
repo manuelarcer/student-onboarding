@@ -1,8 +1,8 @@
 # 06. Single point
 
-- Goal: attach a machine-learning interatomic potential to a structure with `mliprun`, read one energy and one set of forces out of it, assemble an energy difference whose every term comes from the same model, and use the forces to see that a placed adsorbate is a starting guess and not a result
+- Goal: attach a machine-learning interatomic potential to a structure with `mliprun`, read one energy and one set of forces out of it, assemble an energy difference whose every term comes from the same model, and use the forces to see that a placed adsorbate is a starting guess and not a result; then run the same single point from the terminal with `mlip singlepoint run`
 - Before you start: modules 00 to 05 finished; the `mlip-mace` environment active; Jupyter Lab started from the repository root, as step 12 of module 00 says; the kernel at the top right of the notebook reads "Python 3 (ipykernel)"
-- Time to run the notebook: under 1 minute (measured 10.3 to 12.6 s over five runs, macOS on Apple Silicon, and 8.0 to 8.5 s over three runs of the same cells while the machine was quieter, and 12.1 s in the verification run of 2026-10-12, so that spread is the machine and not the notebook; the first run of a session is slower again while the model weights and the package caches are cold, measured between 19 s and 37 s on such starts)
+- Time to run the notebook: under 1 minute (measured 10.3 to 12.6 s over five runs, macOS on Apple Silicon, and 8.0 to 8.5 s over three runs of the same cells while the machine was quieter, and 12.1 s in the verification run of 2026-10-12, so that spread is the machine and not the notebook; the first run of a session is slower again while the model weights and the package caches are cold, measured between 19 s and 37 s on such starts; those times are of the version before the section on `mlip singlepoint run`, which adds one command that builds the model again: the new version measured 12.7 s on 2026-10-16 on a Linux laptop, Python 3.14, where the version before it took 9.9 s, and it has not been timed on the Mac yet)
     - The MACE-MP-0 weights, about 45 MB, were downloaded by step 10 of module 00 and sit in `~/.cache/mace/`, so this notebook downloads nothing; on a computer where that step was never run, the first cell that builds a model downloads them and needs a network connection
 - Time to work through it: about 2 hours, reading every cell, changing a value in it and running it again
 - After this you can:
@@ -12,5 +12,6 @@
     - Build one calculator with `build_calculator(mlip="mace", device="cpu")` and reuse it for many structures, instead of paying the model load once per structure
     - Assemble `E_ads = E(slab+O) − E(slab) − ½ E(O2)` with every term from that one calculator, say what breaks when two terms come from different models or heads (canon `C3`), and say why the ½ O2 reference is the weakest term of the three
     - Read the forces of a placed adsorbate against the 0.05 eV/Å that module 07 relaxes to, and say why no energy in this module is a number to report
-- Files: `single_point.ipynb`; the notebook reads no file and writes none, every structure is built in memory
+    - Run the same single point with `mlip singlepoint run`, read the energy and its two largest forces, over the free atoms and over all atoms, out of the run record, and say why a slab read from a POSCAR needs `--no-stress` and why a single point next to a relaxation needs `--output-dir`
+- Files: `single_point.ipynb`; every structure is built in memory, and only the last section writes, one folder `work/single_point_fcc/` with the structure the command reads and the two files the command writes; `work/` is not committed
 - Needs `../../scripts/onboarding_structures.py`
