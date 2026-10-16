@@ -272,7 +272,7 @@ cd ..
 
 Expected: `git clone` prints `Cloning into 'mliprun'...` and a few progress lines, and a
 folder `mliprun` appears. `pip install` ends with `Successfully installed ...` containing
-`mliprun-0.4.0` (or newer) and `asetools`. The `-e` means "editable": Python reads the
+`mliprun-0.5.0` (or newer) and `asetools`. The `-e` means "editable": Python reads the
 code from the `mliprun` folder you just downloaded, so keep that folder where it is.
 `[neb]` adds the helper package `asetools`, downloaded from GitHub.
 
@@ -308,7 +308,7 @@ Linux `linux`):
 mliprun environment doctor
 ================================
 Python          3.11.10 (darwin)
-mliprun         0.4.0
+mliprun         0.5.0
 ase             3.29.0
 asetools        OK (real package; NEB sanity checks active)
 torch           2.14.0

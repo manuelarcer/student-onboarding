@@ -51,7 +51,7 @@ for the people who maintain this repository; you do not need it.
 | `modules/05-adsorbates/` | Adsorbates | under 1 minute | about 3 |
 | `modules/06-single-point/` | Single point | under 1 minute | about 2 |
 | `modules/07-relaxation/` | Relaxation | under 2 minutes | about 3 |
-| `modules/08-frequencies/` | Frequencies | under 1 minute | about 2 |
+| `modules/08-frequencies/` | Frequencies | about 1 minute | about 2 |
 | `modules/09-neb/` | NEB | under 1.5 minutes | about 2 |
 | `modules/10-md/` | Molecular dynamics | about 2.5 minutes | about 3 |
 | `projects/ew2gc/` | Capstone: `capstone.ipynb` | about 2.5 minutes | about 4 |
@@ -79,6 +79,9 @@ from top to bottom, on macOS 27.0.1 (Apple M3, Python 3.11.10); the versions and
 times are in `docs/verification-2026-10-12.md`. Module 00 was executed end to end on
 macOS 26.6 (Apple Silicon, Python 3.11.10) on 2026-09-17: every command in
 `modules/00-setup/README.md`, from a fresh virtual environment to a loaded MACE model.
+On 2026-10-16 modules 06 to 10 and the capstone were executed again on a Linux laptop
+against mliprun 0.5.0, and modules 06 and 08 were rewritten for its new `singlepoint` and
+`freq` commands; that run, and what it did not cover, is in `docs/verification-2026-10-16.md`.
 The Windows and Linux instructions in module 00 are taken from mliprun's tested install
 guides and were not executed here, and neither was module 11 (ASPIRE2A), which the
 author has not run on the cluster. If a Windows, Linux or ASPIRE2A step fails, tell your
