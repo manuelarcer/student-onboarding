@@ -123,8 +123,12 @@ pip install mace-torch ase
 # --- 7. mliprun ------------------------------------------------------------------------
 # The code is downloaded to scratch and installed in "editable" mode (-e), as in module 00.
 # [neb] installs the correct asetools package. Never run "pip install asetools" alone.
+# mliprun changes often. --branch v0.5.0 downloads the version this course was tested with,
+# not the latest code (module 00, step 8). git then prints a "detached HEAD" note; that is
+# normal. A folder made by an older run of this script is reused as it is: check its version
+# with "pip show mliprun" after the script ends.
 if [ ! -d "$MLIPRUN" ]; then
-    git clone https://github.com/manuelarcer/mliprun.git "$MLIPRUN"
+    git clone --branch v0.5.0 https://github.com/manuelarcer/mliprun.git "$MLIPRUN"
 fi
 cd "$MLIPRUN"
 pip install -e ".[neb]"
