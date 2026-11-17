@@ -264,15 +264,26 @@ number.
 Same commands on all systems, one line at a time:
 
 ```
-git clone https://github.com/manuelarcer/mliprun.git
+git clone --branch v0.5.0 https://github.com/manuelarcer/mliprun.git
 cd mliprun
 pip install -e ".[neb]"
 cd ..
 ```
 
-Expected: `git clone` prints `Cloning into 'mliprun'...` and a few progress lines, and a
-folder `mliprun` appears. `pip install` ends with `Successfully installed ...` containing
-`mliprun-0.5.0` (or newer) and `asetools`. The `-e` means "editable": Python reads the
+> **mliprun changes often.** The group develops mliprun continuously: new commands,
+> models and options are added every few weeks, and the code on GitHub changes without
+> notice. This course was tested with version 0.5.0, so `--branch v0.5.0` downloads exactly
+> that version and not the latest code. Keep this version for the whole course and do not
+> update it. A newer version can print different messages, write different files, or need
+> options that this course does not show. For your own research later, ask your supervisor
+> which version to use; the changes between versions are listed in the file `CHANGELOG.md`
+> inside the `mliprun` folder.
+
+Expected: `git clone` prints `Cloning into 'mliprun'...`, then a note that starts with
+`Note: switching to '3420d90...'` and `You are in 'detached HEAD' state`. That note is
+normal: it only says that you downloaded one fixed version instead of the latest code, and
+you can ignore the advice that follows it. A folder `mliprun` appears. `pip install` ends
+with `Successfully installed ...` containing `mliprun-0.5.0` and `asetools`. The `-e` means "editable": Python reads the
 code from the `mliprun` folder you just downloaded, so keep that folder where it is.
 `[neb]` adds the helper package `asetools`, downloaded from GitHub.
 

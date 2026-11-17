@@ -82,6 +82,9 @@ macOS 26.6 (Apple Silicon, Python 3.11.10) on 2026-09-17: every command in
 On 2026-10-16 modules 06 to 10 and the capstone were executed again on a Linux laptop
 against mliprun 0.5.0, and modules 06 and 08 were rewritten for its new `singlepoint` and
 `freq` commands; that run, and what it did not cover, is in `docs/verification-2026-10-16.md`.
+mliprun is developed continuously and its code on GitHub changes often, so module 00
+installs the fixed release 0.5.0 and not the latest code. Keep that version for the whole
+course: a newer one can print or need things the modules do not show.
 The Windows and Linux instructions in module 00 are taken from mliprun's tested install
 guides and were not executed here, and neither was module 11 (ASPIRE2A), which the
 author has not run on the cluster. If a Windows, Linux or ASPIRE2A step fails, tell your
